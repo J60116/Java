@@ -1,0 +1,23 @@
+
+import java.util.Scanner;
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		//口座とATMのインスタンスの生成
+		Account a = new Account("a", 1_000_000,2);
+                ATM atm = new ATM(100_000_000);
+
+		//accountフィールドに生成済みのAccountインスタンスを代入
+		atm.account = a;
+
+		//取引開始
+		atm.start();
+		//続けて取引開始
+                atm.start();
+		
+	}
+
+}
+
