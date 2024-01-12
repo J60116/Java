@@ -13,7 +13,7 @@ public class Account {
 	public Account(String name, int balance) {
 		this.setName(name);
 		this.setBalance(balance);
-		this.setFreeCount(3);
+		this.setFreeCount(0);
 		this.setDateOfLastUse(LocalDate.of(2024, 1, 8));
 	}
 
