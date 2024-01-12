@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class ATM {
+public class ATM implements BankTeller{
 
 	//フィールド
 	static final String NAME_BANK = "ABC銀行"; //ATMの取り扱い銀行名
@@ -22,6 +22,7 @@ public class ATM {
 	private boolean charge; //手数料の要否
 	private boolean checked; //入力内容の確認
 	Account account;
+	Bankbook bankbook;
 	Scanner sc;
 	private LocalDate now;
 
@@ -78,6 +79,7 @@ public class ATM {
 	public void trueTrade() {
 		//取引が成立した場合、口座の最終利用日を更新する
 		this.account.setDateOfLastUse(getTransactionDate());
+		this.bankbook.recording();
 		this.trade = true;
 	}
 
@@ -125,46 +127,62 @@ public class ATM {
 		} else {
 			System.out.println("\n<<いらっしゃいませ>>");
 			System.out.print("\n【1】お預入れ\n【2】お引き出し\n【3】残高照会\n【0】取引終了\n\nご希望の取引を選択してください: ");
-			this.setTransactionCode(this.sc.nextInt());
-			switch (this.getTransactionCode()) {
-			case 0 -> this.finish();
-			case 1 -> {
-				this.setTransaction("預入");
-				this.remind();
-				this.deposit();
-				this.choicePrint();
+			
+			try {
+				this.setTransactionCode(this.sc.nextInt());
+				switch (this.getTransactionCode()) {
+				case 0 -> this.finish();
+				case 1 -> {
+					this.setTransaction("預入");
+					this.remind();
+					this.deposit();
+					this.choicePrint();
+				}
+				case 2 -> {
+					this.setTransaction("引出");
+					this.remind();
+					this.withdrawal();
+					this.choicePrint();
+				}
+				case 3 -> {
+					this.setTransaction("残高照会");
+					this.account.dispBalance();
+					this.start2();
+				}
+				default -> this.stop();
+				}
+				;
+			} catch(InputMismatchException e) {
+				//発生した例外内容を表示する
+				System.out.println(e.toString());
+				//再入力させる
+				System.out.println("入力文字列を整数へ変換できません。はじめからやり直してください。");
+				//入力内容を取り消す
+				this.sc.next();
 			}
-			case 2 -> {
-				this.setTransaction("引出");
-				this.remind();
-				this.withdrawal();
-				this.choicePrint();
-			}
-			case 3 -> {
-				this.setTransaction("残高照会");
-				this.account.dispBalance();
-				this.start2();
-			}
-			default -> this.stop();
-			}
-			;
 		}
 
 	}
 
 	public void start2() {
 		System.out.print("\n取引を続けますか？\n【1】はい 【0】いいえ: ");
-		int n = this.sc.nextInt();
-		switch (n) {
-		case 0 -> {
-			this.finish();
-		}
-		case 1 -> {
-			this.start();
-		}
-		default -> {
+		int n = 0;
+		try {
+			n = this.sc.nextInt();
+			switch (n) {
+			case 0 -> {
+				this.finish();
+			}
+			case 1 -> {
+				this.start();
+			}
+			default -> {
+				this.stop();
+			}
+			}
+		} catch(InputMismatchException e){
 			this.stop();
-		}
+			this.sc.next();
 		}
 	}
 
@@ -193,11 +211,11 @@ public class ATM {
 		}
 
 	}
-
+	
 	public void finish() {
 		System.out.println("\n取引を終了します\nご利用いただきましてありがとうございました");
 	}
-
+	
 	public void stop() {
 		this.setTransaction("取引はありません");
 		this.setTransactionCode(0);
@@ -206,6 +224,7 @@ public class ATM {
 	}
 
 	//任意の額を入金
+	@Override
 	public void deposit() {
 		while (true) {
 			System.out.print("\n入金額を入力してください:");
@@ -213,7 +232,7 @@ public class ATM {
 				this.setTransactionAmount(this.sc.nextInt());
 			} catch (InputMismatchException e) {
 				System.out.println("整数値で入力してください");
-				sc.nextLine();
+				this.sc.nextLine();
 				continue;
 			}
 			this.judge(this.transactionCode);
@@ -251,6 +270,7 @@ public class ATM {
 	}
 
 	//任意の額を出金
+	@Override
 	public void withdrawal() {
 		if (this.account.getBalance() <= 0) {
 			System.out.println("残高がありません");
@@ -266,7 +286,7 @@ public class ATM {
 				this.setTransactionAmount(this.sc.nextInt());
 			} catch (InputMismatchException e) {
 				System.out.println("整数値で入力してください");
-				sc.nextLine();
+				this.sc.nextLine();
 				continue;
 			}
 			this.judge(this.transactionCode);
@@ -326,23 +346,30 @@ public class ATM {
 		System.out.println("金額: " + String.format("%,d", this.transactionAmount) + " 円");
 		System.out.println("---------------------------------------------");
 		System.out.print("ご確認のうえ、\n【1】確認 または【0】取消\nを選択してください: ");
-		int n = sc.nextInt();
-		switch (n) {
-		case 0 -> {
-			this.falseChecked();
-			if (this.transactionCode == 1) {
-				this.deposit();
-			} else if (this.transactionCode == 2) {
-				this.withdrawal();
+		int n = 0;
+		try {
+			n = this.sc.nextInt();
+			switch (n) {
+			case 0 -> {
+				this.falseChecked();
+				if (this.transactionCode == 1) {
+					this.deposit();
+				} else if (this.transactionCode == 2) {
+					this.withdrawal();
+				}
 			}
-		}
-		case 1 -> this.trueChecked();
-		default -> {
+			case 1 -> this.trueChecked();
+			default -> {
+				this.falseChecked();
+				this.stop();
+			}
+			}
+			;
+		} catch(InputMismatchException e){
 			this.falseChecked();
 			this.stop();
+			this.sc.next();
 		}
-		}
-		;
 	}
 
 	//利用明細書の発行
@@ -352,7 +379,8 @@ public class ATM {
 			return;
 		}
 		System.out.print("\nご利用明細表を発行する場合は\n【1】を入力してください: ");
-		if (this.sc.nextInt() == 1) {
+		String s = this.sc.next();
+		if(s.equals("1")) {
 			this.createStatement();
 		} else {
 			System.out.println("\n<<ご利用ありがとうございました>>");
@@ -364,6 +392,7 @@ public class ATM {
 	}
 
 	//利用明細表の作成
+	@Override
 	public void createStatement() {
 		System.out.println("\n********ご利用明細表********");
 		System.out.println("　お取引日: " + this.getTransactionDate());
