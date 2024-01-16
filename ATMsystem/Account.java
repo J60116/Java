@@ -13,7 +13,8 @@ public class Account {
 	public Account(String name, int balance) {
 		this.setName(name);
 		this.setBalance(balance);
-		this.setFreeCount(0);
+		//無料取引回数と最終利用日の設定
+		this.setFreeCount(3);
 		this.setDateOfLastUse(LocalDate.of(2024, 1, 8));
 	}
 
@@ -68,12 +69,16 @@ public class Account {
 	public int getFreeCount() {
 		return this.freeCount;
 	}
-
+	//初期設定用
 	public void setFreeCount(int freeCount) {
 		if (freeCount < 0) {
 			throw new IllegalArgumentException("freeCountは0以上で設定してください");
 		}
 		this.freeCount = freeCount;
+	}
+	//カウント用（オーバーロード）
+	public void setFreeCount() {
+		this.freeCount++;
 	}
 
 	public LocalDate getDateOfLastUse() {
