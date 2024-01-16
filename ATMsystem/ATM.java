@@ -80,6 +80,7 @@ public class ATM implements BankTeller{
 		//取引が成立した場合、口座の最終利用日を更新する
 		this.account.setDateOfLastUse(getTransactionDate());
 		this.bankbook.recording();
+		this.falseChecked();
 		this.trade = true;
 	}
 
@@ -91,8 +92,25 @@ public class ATM implements BankTeller{
 		return this.charge;
 	}
 
-	public void trueCharge() {
-		this.charge = true;
+	public void setCharge(int transactionCode) {
+		switch (transactionCode) {
+		case 1 -> {
+			//預入の場合
+			if ((this.transactionAmount < 30_000) && (this.account.getFreeCount() >= this.MAX_FREE_COUNT)) {
+				this.charge = true;
+			} else {
+				this.charge = false;
+			}
+		}
+		case 2 -> {
+			//引出の場合
+			if (this.account.getFreeCount() >= this.MAX_FREE_COUNT) {
+				this.charge = true;
+			} else {
+				this.charge = false;
+			}
+		}
+		}
 	}
 
 	public void falseCharge() {
@@ -235,7 +253,7 @@ public class ATM implements BankTeller{
 				this.sc.nextLine();
 				continue;
 			}
-			this.judge(this.transactionCode);
+			this.setCharge(this.transactionCode);
 			//預入最大限度額を確認
 			if (this.transactionAmount < MIN_AMOUNT || this.transactionAmount > MAX_DEPOSIT_AMOUNT) {
 				System.out.println(MIN_AMOUNT + "～" + MAX_DEPOSIT_AMOUNT + "の間で入力してください");
@@ -256,7 +274,6 @@ public class ATM implements BankTeller{
 				if (this.getCharge()) {
 					this.account.setBalance(this.account.getBalance() - this.HANDLING_CHARGE);
 				}
-				this.falseChecked();
 				this.trueTrade();
 				System.out.println(String.format("%,d", this.transactionAmount) + "円を入金します");
 			}
@@ -264,7 +281,7 @@ public class ATM implements BankTeller{
 		}
 		//入金では３万円以下の場合にカウントする
 		if (this.transactionAmount <= 30_000) {
-			this.account.setFreeCount(this.account.getFreeCount() + 1);
+			this.account.setFreeCount();
 		}
 
 	}
@@ -274,7 +291,7 @@ public class ATM implements BankTeller{
 	public void withdrawal() {
 		if (this.account.getBalance() <= 0) {
 			System.out.println("残高がありません");
-			this.setTransaction("取引はありません");
+			this.setTransaction("取引なし");
 			this.setTransactionCode(0);
 			this.setTransactionAmount(0);
 			return;
@@ -289,7 +306,7 @@ public class ATM implements BankTeller{
 				this.sc.nextLine();
 				continue;
 			}
-			this.judge(this.transactionCode);
+			this.setCharge(this.transactionCode);
 			//引出最大限度額を確認
 			if (this.transactionAmount > MAX_WITHDRAWAL_AMOUNT) {
 				System.out.println(MIN_AMOUNT + "～" + MAX_WITHDRAWAL_AMOUNT + "の間で入力してください");
@@ -315,30 +332,29 @@ public class ATM implements BankTeller{
 				if (this.getCharge()) {
 					this.account.setBalance(this.account.getBalance() - this.HANDLING_CHARGE);
 				}
-				this.falseChecked();
 				this.trueTrade();
 				System.out.println(String.format("%,d", this.transactionAmount) + "円を出金します");
 			}
 			break;
 		}
-		this.account.setFreeCount(this.account.getFreeCount() + 1);
+		this.account.setFreeCount();
 	}
 
 	//手数料が無料の取引回数
-	public void judge(int transactionCode) {
-		switch (transactionCode) {
-		case 1 -> {
-			if ((this.transactionAmount < 30_000) && (this.account.getFreeCount() >= this.MAX_FREE_COUNT)) {
-				this.trueCharge();
-			}
-		}
-		case 2 -> {
-			if (this.account.getFreeCount() >= this.MAX_FREE_COUNT) {
-				this.trueCharge();
-			}
-		}
-		}
-	}
+//	public void judge(int transactionCode) {
+//		switch (transactionCode) {
+//		case 1 -> {
+//			if ((this.transactionAmount < 30_000) && (this.account.getFreeCount() >= this.MAX_FREE_COUNT)) {
+//				this.trueCharge();
+//			}
+//		}
+//		case 2 -> {
+//			if (this.account.getFreeCount() >= this.MAX_FREE_COUNT) {
+//				this.trueCharge();
+//			}
+//		}
+//		}
+//	}
 
 	//入力した金額の確認
 	public void check(int transactionCode) {
@@ -388,6 +404,7 @@ public class ATM implements BankTeller{
 		this.setTransaction("取引なし");
 		this.setTransactionCode(0);
 		this.setTransactionAmount(0);
+		this.falseCharge();
 		this.falseTrade();
 	}
 
