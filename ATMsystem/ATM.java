@@ -96,7 +96,7 @@ public class ATM implements BankTeller{
 		switch (transactionCode) {
 		case 1 -> {
 			//預入の場合
-			if ((this.transactionAmount < 30_000) && (this.account.getFreeCount() >= this.MAX_FREE_COUNT)) {
+			if ((this.getTransactionAmount() < 30_000) && (this.account.getFreeCount() >= this.MAX_FREE_COUNT)) {
 				this.charge = true;
 			} else {
 				this.charge = false;
@@ -254,33 +254,33 @@ public class ATM implements BankTeller{
 				continue;
 			}
 			this.setCharge(this.transactionCode);
-			//預入最大限度額を確認
-			if (this.transactionAmount < MIN_AMOUNT || this.transactionAmount > MAX_DEPOSIT_AMOUNT) {
+			//預入可能な金額か確認
+			if (this.getTransactionAmount() < MIN_AMOUNT || this.getTransactionAmount() > MAX_DEPOSIT_AMOUNT) {
 				System.out.println(MIN_AMOUNT + "～" + MAX_DEPOSIT_AMOUNT + "の間で入力してください");
 				continue;
 			}
-			//手数料がかかる場合、残高がマイナスになるのを防ぐ
-			if (this.getCharge()) {
-				if (this.account.getBalance() + this.transactionAmount - this.HANDLING_CHARGE < 0) {
-					System.out.println("残高が不足しています");
-					continue;
-				}
-			}
-			this.check(this.transactionCode);
+			//手数料がかかる場合、残高がマイナスになるのを防ぐ →　取引最低限度額を設定したため不要
+//			if (this.getCharge()) {
+//				if (this.account.getBalance() + this.getTransactionAmount() - this.HANDLING_CHARGE < 0) {
+//					System.out.println("残高が不足しています");
+//					continue;
+//				}
+//			}
+			this.check(this.getTransactionCode());
 			//入力金額の確認を得てから、残高を変更する
 			if (this.getChecked()) {
-				this.setStock(this.getStock() + this.transactionAmount);
-				this.account.setBalance(this.account.getBalance() + this.transactionAmount);
+				this.setStock(this.getStock() + this.getTransactionAmount());
+				this.account.setBalance(this.account.getBalance() + this.getTransactionAmount());
 				if (this.getCharge()) {
 					this.account.setBalance(this.account.getBalance() - this.HANDLING_CHARGE);
 				}
 				this.trueTrade();
-				System.out.println(String.format("%,d", this.transactionAmount) + "円を入金します");
+				System.out.println(String.format("%,d", this.getTransactionAmount()) + "円を入金します");
 			}
 			break;
 		}
 		//入金では３万円以下の場合にカウントする
-		if (this.transactionAmount <= 30_000) {
+		if (this.getTransactionAmount() <= 30_000) {
 			this.account.setFreeCount();
 		}
 
@@ -290,7 +290,15 @@ public class ATM implements BankTeller{
 	@Override
 	public void withdrawal() {
 		if (this.account.getBalance() <= 0) {
+			//残高が0以下の場合
 			System.out.println("残高がありません");
+			this.setTransaction("取引なし");
+			this.setTransactionCode(0);
+			this.setTransactionAmount(0);
+			return;
+		} else if (this.account.getBalance() < MIN_AMOUNT ||(this.account.getFreeCount() >= 3 && this.account.getBalance() - this.HANDLING_CHARGE < MIN_AMOUNT )) {
+			//残高が取引最低限度額に満たない場合
+			System.out.println("残高が不足しているため取引を中止します");
 			this.setTransaction("取引なし");
 			this.setTransactionCode(0);
 			this.setTransactionAmount(0);
@@ -306,34 +314,34 @@ public class ATM implements BankTeller{
 				this.sc.nextLine();
 				continue;
 			}
-			this.setCharge(this.transactionCode);
-			//引出最大限度額を確認
-			if (this.transactionAmount > MAX_WITHDRAWAL_AMOUNT) {
+			this.setCharge(this.getTransactionCode());
+			//引出可能な金額か確認
+			if (this.getTransactionAmount() < MIN_AMOUNT ||this.getTransactionAmount() > MAX_WITHDRAWAL_AMOUNT) {
 				System.out.println(MIN_AMOUNT + "～" + MAX_WITHDRAWAL_AMOUNT + "の間で入力してください");
 				continue;
 			}
-			//手数料がかかる場合、残高がマイナスになるのを防ぐ
+			//残高がマイナスになるのを防ぐ
 			if (this.getCharge()) {
-				if (this.account.getBalance() < this.transactionAmount + this.HANDLING_CHARGE) {
+				if (this.account.getBalance() < this.getTransactionAmount() + this.HANDLING_CHARGE) {
 					System.out.println("残高が不足しています");
 					continue;
 				}
 			} else {
-				if (this.account.getBalance() < this.transactionAmount) {
+				if (this.account.getBalance() < this.getTransactionAmount()) {
 					System.out.println("残高が不足しています");
 					continue;
 				}
 			}
-			this.check(this.transactionCode);
+			this.check(this.getTransactionCode());
 			//入力金額の確認を得てから、残高を変更する
 			if (this.getChecked()) {
-				this.setStock(this.getStock() - this.transactionAmount);
-				this.account.setBalance(this.account.getBalance() - this.transactionAmount);
+				this.setStock(this.getStock() - this.getTransactionAmount());
+				this.account.setBalance(this.account.getBalance() - this.getTransactionAmount());
 				if (this.getCharge()) {
 					this.account.setBalance(this.account.getBalance() - this.HANDLING_CHARGE);
 				}
 				this.trueTrade();
-				System.out.println(String.format("%,d", this.transactionAmount) + "円を出金します");
+				System.out.println(String.format("%,d", this.getTransactionAmount()) + "円を出金します");
 			}
 			break;
 		}
@@ -359,7 +367,7 @@ public class ATM implements BankTeller{
 	//入力した金額の確認
 	public void check(int transactionCode) {
 		System.out.println("---------------------------------------------");
-		System.out.println("金額: " + String.format("%,d", this.transactionAmount) + " 円");
+		System.out.println("金額: " + String.format("%,d", this.getTransactionAmount()) + " 円");
 		System.out.println("---------------------------------------------");
 		System.out.print("ご確認のうえ、\n【1】確認 または【0】取消\nを選択してください: ");
 		int n = 0;
@@ -368,9 +376,9 @@ public class ATM implements BankTeller{
 			switch (n) {
 			case 0 -> {
 				this.falseChecked();
-				if (this.transactionCode == 1) {
+				if (transactionCode == 1) {
 					this.deposit();
-				} else if (this.transactionCode == 2) {
+				} else if (transactionCode == 2) {
 					this.withdrawal();
 				}
 			}
