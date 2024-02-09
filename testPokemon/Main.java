@@ -8,13 +8,10 @@ public class Main {
 		
 		user.pocket[0] = new Eevee();
 		user.pocket[1] = new Eevee("Brown");
-        user.pocket[2] = new Vaporeon("Blue");
+		user.pocket[2] = new Vaporeon("Blue");
 
-        user.goToPokemonCenter();
-		
-		for(Pokemon p : user.pocket) {
-			p.viewStatus();
-		}
+		user.goToPokemonCenter();
+		user.viewPartyStatus();
 		
 	}
 
