@@ -1,6 +1,6 @@
 package testPokemon;
 
-public class Vaporeon extends Eevee{ 
+class Vaporeon extends Eevee{ 
 	//シャワーズ
 	static final String NAME = "Vaporeon";
 
@@ -22,18 +22,18 @@ public class Vaporeon extends Eevee{
 	}
 
 	@Override
-	void attack(Pokemon p) {
+	public void attack(Pokemon p) {
 		System.out.println(this.name + " attacked" + p.name + "!");
 		p.hp -= 10;
 	}
 
-	void HydroPump(Pokemon p){
+	public void HydroPump(Pokemon p){
 		System.out.println(this.name + " used Hydro Pump!");
 		p.hp -= 20;
 	}
 
 	@Override
-	void getStatus() {
-		System.out.println(this.toString());
+	public void evolve(String stone) {
+		//何もしない
 	}
 }

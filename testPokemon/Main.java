@@ -9,10 +9,14 @@ public class Main {
 		user.pocket[0] = new Eevee();
 		user.pocket[1] = new Eevee("Brown");
 		user.pocket[2] = new Vaporeon("Blue");
-
-		user.goToPokemonCenter();
-		user.viewPartyStatus();
 		
+		Pokemon eevee = new Eevee();
+		user.getPokemon(eevee);
+
+		user.viewPartyStatus();
+		user.visitPokemonCenter();
+		
+		user.pocket[0].evolve("ThunderStone");
 	}
 
 }

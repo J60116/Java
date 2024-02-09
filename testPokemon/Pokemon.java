@@ -30,7 +30,7 @@ abstract class Pokemon {
 	double weight; //重さ(kg)
 	Random rand; //乱数用
 	
-	Pokemon(String nickname) {
+	public Pokemon(String nickname) {
 		this.name = "Unknown";
 		this.nickname = nickname;
 		this.gender = ARRAY_GENDER[0];
@@ -56,18 +56,18 @@ abstract class Pokemon {
 		return str;
 	}
 
-	//ステータスを見る
-	void getStatus() {
+	//ステータスを表示する
+	public void showStatus() {
 		System.out.println(this.toString());
 	}
 		
 	//逃げる
-	void run() {
+	public void run() {
 		System.out.println(this.nickname + " run away.");
 	}
 
 	//回復する
-	void recover(){
+	public void recover(){
 		this.hp = this.hp_max;
 		System.out.println("Your " + this.nickname + " regained health!");
 	}

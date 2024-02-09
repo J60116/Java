@@ -1,6 +1,6 @@
 package testPokemon;
 
-public class Eevee extends Pokemon { 
+class Eevee extends Pokemon { 
 	//イーブイの情報
 	static final String NAME = "Eevee";
 	final String[] ARRAY_ABILITY = {"Nigeashi","Tekiouryoku"};
@@ -33,7 +33,7 @@ public class Eevee extends Pokemon {
 	}
 
 	@Override
-	void attack(Pokemon p) {
+	public void attack(Pokemon p) {
 		System.out.println(this.name + "attacked" + p.name + "!");
 		p.hp -= 5;
 	}
