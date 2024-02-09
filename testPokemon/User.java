@@ -25,12 +25,12 @@ class User {
 			String str = sc.nextLine();
 			pokemon.nickname = str;
 		}
-		System.out.print("Pleasure to meet you "+ pokemon.nickname + "!"); 
+		System.out.println("Pleasure to meet you "+ pokemon.nickname + "!"); 
 	}
 	
 	//ポケモンを捕まえる
 	public void getPokemon(Pokemon pokemon) {
-		System.out.println(this.name + got + pokemon.name + "!");
+		System.out.println(this.name + " got " + pokemon.name + "!");
 		for(int i = 0; i < this.pocket.length; i++) {
 			if(this.pocket[i] == null) {
 				this.pocket[i] = pokemon;
