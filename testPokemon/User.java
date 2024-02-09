@@ -1,9 +1,12 @@
 package testPokemon;
 
+import java.util.Scanner;
+
 class User {
 	String name;
 	Pokemon[] pocket;
 	Pokemon[] box;
+	Scanner sc;
 	
 	public User() {
 		this("Satoshi");
@@ -13,6 +16,7 @@ class User {
 		this.name = name;
 		this.pocket = new Pokemon[6];
 		this.box = new Pokemon[30];
+		this.sc = new Scanner(System.in);
 	}
 
 	//ニックネームをつける

@@ -2,16 +2,17 @@ package testPokemon;
 
 class Eevee extends Pokemon { 
 	//イーブイの情報
-	static final String NAME = "Eievui";
 	final String[] ARRAY_ABILITY = {"Nigeashi","Tekiouryoku"};
+	Object[] EEVEE = {133,"Eievui", ARRAY_TYPE[0], "Nigeashi", 0.3, 6.5, 55};
+	static final String NAME = EEVEE[1];
 	//進化ポケモンの情報
 	//進化の石
 	final String[] ARRAY_EVOLUTIONARY_STONE = {"WaterStone", "ThunderStone", "FireStone"};
-	//0:DexNo 1:Name 2:Type 3:Ability 4:HP_MAX 5:Height 6:Weight
+	//0:DexNo 1:Name 2:Type 3:Ability 4:Height 5:Weight 6:HP_MAX
 	final Object[] VAPOREON = {134, "Showers", ARRAY_TYPE[2], "Chosui", 1.0, 29.0, 130};
 	final Object[] JOLTEON = {135, "Thunders", ARRAY_TYPE[3], "Chikuden", 0.8, 24.5, 65};
 	final Object[] FLAREON = {136, "Booster", ARRAY_TYPE[1], "Moraibi", 0.9, 25.0, 65};
-	final Object[][] ARRAY_EVOLVUTION = {VAPOREON, JOLTEON, FLAREON};
+	final Object[][] ARRAY_EVOLUTION = {VAPOREON, JOLTEON, FLAREON};
 	// final int[] ARRAY_EVOLVED_DEXNO = {0134, 0135, 0136};
 	// final String[] ARRAY_EVOLVED_NAME = {"Vaporeon", "Jolteon", "FireStone"};
 	// final String[] ARRAY_EVOLVED_TYPE = {ARRAY_TYPE[2], ARRAY_TYPE[3], ARRAY_TYPE[1]};
@@ -50,12 +51,13 @@ class Eevee extends Pokemon {
 		for(int i = 0; i<ARRAY_EVOLUTIONARY_STONE.length; i++){
 			if (stone.equals(ARRAY_EVOLUTIONARY_STONE[i])) {
 				System.out.println("Congratulations! Your " + this.nickname + " evolved into " + ARRAY_EVOLUTION[i][1] + "!");
-				this.dexNo = ARRAY_EVOLUTION[i][0];
-				this.name = ARRAY_EVOLUTION[i][1];
-				this.type = ARRAY_EVOLUTION[i][2];
-				this.ability = ARRAY_EVOLUTION[i][3];
-				this.height = ARRAY_EVOLUTION[i][4];
-				this.weight = ARRAY_EVOLUTION[i][5];
+				this.dexNo = (int)ARRAY_EVOLUTION[i][0];
+				this.name = (String)ARRAY_EVOLUTION[i][1];
+				this.type = (String)ARRAY_EVOLUTION[i][2];
+				this.ability = (String)ARRAY_EVOLUTION[i][3];
+				this.height = (double)ARRAY_EVOLUTION[i][4];
+				this.weight = (double)ARRAY_EVOLUTION[i][5];
+				this.hp_max = (int)ARRAY_EVOLUTION[i][6];
 				return;
 			}
 		}

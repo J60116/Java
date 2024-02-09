@@ -3,24 +3,27 @@ package testPokemon;
 public class Main {
 
 	public static void main(String[] args) {
-		
+		//ポケモントレーナーの生成
 		User user = new User();
-		
-		//所持しているポケモン
+
+		//いま所持しているポケモン
 		user.pocket[0] = new Eevee();
 		user.pocket[1] = new Eevee("Brown");
 		user.pocket[2] = new Vaporeon("Blue");
 		
-		//イーブイが現れた
+		//ポケモンが現れた
 		Pokemon eevee = new Eevee();
 		
-		//イーブイを捕まえた
+		//ポケモンを捕まえた
 		user.getPokemon(eevee);
 
-		//
+		//所持しているポケモンのステータスを見る
 		user.viewPartyStatus();
+
+		//ポケモンセンターに行く
 		user.visitPokemonCenter();
 		
+		//１番目のポケモンに「かみなりのいし」を渡す
 		user.pocket[0].evolve("ThunderStone");
 	}
 
