@@ -6,16 +6,22 @@ public class Main {
 		
 		User user = new User();
 		
+		//所持しているポケモン
 		user.pocket[0] = new Eevee();
 		user.pocket[1] = new Eevee("Brown");
-        user.pocket[2] = new Vaporeon("Blue");
+		user.pocket[2] = new Vaporeon("Blue");
+		
+		//イーブイが現れた
+		Pokemon eevee = new Eevee();
+		
+		//イーブイを捕まえた
+		user.getPokemon(eevee);
 
-        user.goToPokemonCenter();
+		//
+		user.viewPartyStatus();
+		user.visitPokemonCenter();
 		
-		for(Pokemon p : user.pocket) {
-			p.viewStatus();
-		}
-		
+		user.pocket[0].evolve("ThunderStone");
 	}
 
 }
