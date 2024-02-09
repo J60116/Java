@@ -21,8 +21,9 @@ public class Eevee extends Pokemon {
 		int num1 = this.rand.nextInt(2) + 1; //性別設定用
 		this.gender = ARRAY_GENDER[num1];
 		this.type = ARRAY_TYPE[0]; //Normal
-		int num2 = this.rand.nextInt(2);
+		int num2 = this.rand.nextInt(ARRAY_ABILITY.length); //特性設定用
 		this.ability = ARRAY_ABILITY[num2];
+		this.ball = ARRAY_IMG_BALL[1];
 		this.dexNo = 0133;
 		this.level = 1;
 		this.hp_max = 55; //最大HPを20とする
@@ -40,17 +41,16 @@ public class Eevee extends Pokemon {
 	//進化
 	public void evolve(String stone) {
 		int num = -1; //要素番号
-		if (stone.equals(EVOLUTIONARY_STONE[0])) {
+		if (stone.equals(ARRAY_EVOLUTIONARY_STONE[0])) {
 			num = 0;
-		} else if (stone.equals(EVOLUTIONARY_STONE[1])) {
+		} else if (stone.equals(ARRAY_EVOLUTIONARY_STONE[1])) {
 			num = 1;
-		} else if (stone.equals(EVOLUTIONARY_STONE[2])) {
+		} else if (stone.equals(ARRAY_EVOLUTIONARY_STONE[2])) {
 			num = 2;
 		} else {
 			System.out.println("There doesn't seem to be any change.");
 			return;
 		}
-		System.out.println("Congratulations! Your " + this.nickname + " evolved into " + EVOLVED_NAME[num] + "!");
+		System.out.println("Congratulations! Your " + this.nickname + " evolved into " + ARRAY_EVOLVED_NAME[num] + "!");
 	}
-
 }
