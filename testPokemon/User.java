@@ -2,8 +2,7 @@ package testPokemon;
 
 public class User {
 	String name;
-    Pokemon[] pocket;
-
+	Pokemon[] pocket;
 	
 	public User() {
 		this("Satoshi");
@@ -14,10 +13,23 @@ public class User {
 		this.pocket = new Pokemon[6];
 	}
 
-    public void goToPokemonCenter(){
-        for(Pokemon p : this.pocket) {
-			p.recover();
+	public void goToPokemonCenter(){
+		System.out.println(this.name + " went to the pokemon center.");
+		for(Pokemon p : this.pocket) {
+			if(p!=null) {
+				p.recover();
+			}
 		}
-    }
+	}
+	
+	public void viewPartyStatus(){
+		System.out.println("\nParty Status ---------");
+		for(Pokemon p : this.pocket) {
+			if(p!=null) {
+				p.getStatus();
+			}
+		}
+		System.out.println("----------------------\n");
+	}
 
 }
