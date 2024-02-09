@@ -9,11 +9,13 @@ abstract class Pokemon {
 	//ボールの種類(0:野生、4:敵)
 	final String[] ARRAY_BALL = {"Wild","Monster ball","Super ball","Master ball","Enemy"};
 	//ボールの画像(0:ボールなし（野生または敵）1:戦闘可能、2:瀕死状態）
-	final String[] ARRAY_IMG_BALL = {"","○","●"};
+	final String[] ARRAY_IMG_BALL = {"・","○","●"};
 	//性別
 	final String[] ARRAY_GENDER = {"Unknown","Male","Female"};
+	final String[] ARRAY_IMG_GENDER = {"・","♂","♀"};
 	//技の効果
-	final double[] ARRAY_EFFECTIVE = {0.0, 0.5, 1.0, 2.0};
+	final String[] ARRAY_EFFECTIVE_MSG = {"Has no effect","Not very effective","Effective","Very effective"};
+	final double[] ARRAY_EFFECTIVE_RATE = {0.0, 0.5, 1.0, 2.0};
 	String name; //名前
 	String nickname; //ニックネーム
 	String gender; //性別
@@ -31,8 +33,8 @@ abstract class Pokemon {
 	Random rand; //乱数用
 	
 	public Pokemon(String nickname) {
-		this.name = "Unknown";
 		this.nickname = nickname;
+		this.name = "Unknown";
 		this.gender = ARRAY_GENDER[0];
 		this.type = ARRAY_TYPE[0];
 		this.ability = "Unknown";

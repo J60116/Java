@@ -3,6 +3,7 @@ package testPokemon;
 class User {
 	String name;
 	Pokemon[] pocket;
+	Pokemon[] box;
 	
 	public User() {
 		this("Satoshi");
@@ -11,9 +12,32 @@ class User {
 	public User(String name) {
 		this.name = name;
 		this.pocket = new Pokemon[6];
+		this.box = new Pokemon[10];
+	}
+
+	//ニックネームをつける
+	public void setNickname(Pokemon pokemon){
+		System.out.println(this.name + got + pokemon.name + "!\nDo you give "+ pokemon.name +" a nickname?");
+		System.out.print("【1】YES 【0】NO : ");
+		int num = sc.nextInt();
+		if(num == 1){
+			System.out.print("Nickname: ");
+			String str = sc.nextLine();
+			pokemon.nickname = str;
+		}
+		System.out.print("Pleasure to meet you "+ pokemon.nickname + "!"); 
 	}
 	
+	//ポケモンを捕まえる
 	public void getPokemon(Pokemon pokemon) {
+		for(int i = 0; i<this.pocket.length; i++) {
+			if(this.pocket[i] == null) {
+				this.pocket[i] = pokemon;
+				setNickname(pokemon);
+				break;
+			}
+		}
+
 		for(int i = 0; i<this.pocket.length; i++) {
 			if(this.pocket[i] == null) {
 				this.pocket[i] = pokemon;
@@ -30,6 +54,7 @@ class User {
 //		}
 	}
 
+	//ポケモンセンターに行く
 	public void visitPokemonCenter(){
 		System.out.println(this.name + " visited the pokemon center.");
 		for(Pokemon p : this.pocket) {
@@ -39,6 +64,7 @@ class User {
 		}
 	}
 	
+	//所持しているポケモンのステータスを見る
 	public void viewPartyStatus(){
 		System.out.println("\nParty Status ---------");
 		for(Pokemon p : this.pocket) {
