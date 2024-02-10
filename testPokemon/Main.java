@@ -22,9 +22,14 @@ public class Main {
 
 		//ポケモンセンターに行く
 		user.visitPokemonCenter();
+
+		//2番目と3番目のポケモンに「かみなりのいし」を渡す
+		user.givePokemonItem(user.pocket[1], "ThunderStone");
+		user.givePokemonItem(user.pocket[2], "ThunderStone");
 		
-		//１番目のポケモンに「かみなりのいし」を渡す
-		user.pocket[0].evolve("ThunderStone");
+		//所持しているポケモンのステータスを見る
+		user.viewPartyStatus();
+		
 	}
 
 }

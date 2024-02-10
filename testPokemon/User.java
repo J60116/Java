@@ -26,10 +26,10 @@ class User {
 		int num = sc.nextInt();
 		if(num == 1){
 			System.out.print("Nickname: ");
-			String str = sc.nextLine();
+			String str = sc.next();
 			pokemon.nickname = str;
 		}
-		System.out.println("Pleasure to meet you "+ pokemon.nickname + "!"); 
+		System.out.println("Pleasure to meet you, "+ pokemon.nickname + "!"); 
 	}
 	
 	//ポケモンを捕まえる
@@ -38,15 +38,16 @@ class User {
 		for(int i = 0; i < this.pocket.length; i++) {
 			if(this.pocket[i] == null) {
 				this.pocket[i] = pokemon;
-				System.out.println(pokemon.name + "put in the pocket.");
 				setNickname(pokemon);
-				break;
+				System.out.println(this.name + " put " + pokemon.nickname + " in the pocket.");
+				return;
 			}
 		}
+		//ポケットに空きがない場合はボックスに転送する
 		for(int i = 0; i < this.box.length; i++) {
 			if(this.box[i] == null) {
 				this.box[i] = pokemon;
-				System.out.println(pokemon.name + "put in the box.");
+				System.out.println(pokemon.name + " has moved into the box.");
 				break;
 			}
 		}
@@ -80,6 +81,10 @@ class User {
 		}
 		System.out.println("----------------------\n");
 	}
+  
+	//ポケモンにアイテムを持たせる
+	public void givePokemonItem(Pokemon pokemon, String str) {
+		pokemon.setItem(str);
+	}
 	
-
 }
