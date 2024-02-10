@@ -83,8 +83,9 @@ class User {
 	}
   
 	//ポケモンにアイテムを持たせる
-	public void givePokemonItem(Pokemon pokemon, String str) {
-		pokemon.setItem(str);
+	public void givePokemonItem(Pokemon pokemon, String item) {
+		System.out.println(pokemon.nickname + " received " + item + ".");
+		pokemon.setItem(item);
 	}
 	
 }

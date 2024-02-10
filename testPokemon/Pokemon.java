@@ -24,7 +24,7 @@ abstract class Pokemon {
 	String type; //タイプ
 	String ability; //特性
 	String ball; //ボール
-	String item; //もちもの
+	private String item; //もちもの
 	int dexNo; //ずかん番号
 	int level; //レベル
 	int hp; //体力
