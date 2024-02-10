@@ -31,8 +31,7 @@ final class Vaporeon extends Eevee{
 	
 	@Override
 	public void setItem(String item) {
-		System.out.println(this.nickname + " received " + item + ".");
-		this.item = item;
+		super.setItem(item);
 	}
 
 	@Override
@@ -44,6 +43,11 @@ final class Vaporeon extends Eevee{
 	public void HydroPump(Pokemon p){
 		System.out.println(this.name + " used Hydro Pump!");
 		p.hp -= 20;
+	}
+	
+	@Override
+	public void evolve(int i) {
+		//何もしない
 	}
 
 }

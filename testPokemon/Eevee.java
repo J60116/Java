@@ -60,11 +60,9 @@ class Eevee extends Pokemon {
 		for (int i = 0; i < ARRAY_EVOLUTIONARY_STONE.length; i++) {
 			if (item.equals(ARRAY_EVOLUTIONARY_STONE[i])) {
 				this.evolve(i);
-				super.setItem("None");
 				return;
 			}
 		}
-		System.out.println(this.nickname + " received " + item + ".");
 		super.setItem(item);
 	}
 
@@ -85,7 +83,8 @@ class Eevee extends Pokemon {
 		this.height = ARRAY_EVOLVED_HW[i][0];
 		this.weight = ARRAY_EVOLVED_HW[i][1];
 		this.hp_max = ARRAY_EVOLVED_MAXHP[i];
-		
+		super.setItem("None");
+    
 		// int num = -1; //要素番号
 		// if (stone.equals(ARRAY_EVOLUTIONARY_STONE[0])) {
 		// 	num = 0;
@@ -98,4 +97,5 @@ class Eevee extends Pokemon {
 		// 	return;
 		// }
 		// System.out.println("Congratulations! Your " + this.nickname + " evolved into " + ARRAY_EVOLVED_NAME[num] + "!");
-	}}
+	}
+}
