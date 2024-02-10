@@ -21,16 +21,16 @@ class Eevee extends Pokemon {
 	static final int[] ARRAY_EVOLVED_MAXHP = { 130, 65, 65 };
 
 	public Eevee() {
-		this(NAME);
+		this(ARRAY_IMG_BALL[0]);
 	}
 
-	public Eevee(String nickname) {
-		super(nickname);
+	public Eevee(String ball) {
+		super(ball);
 		this.name = NAME;
+		this.nickname = this.name;
 		this.setGender();
 		this.type = ARRAY_TYPE[0]; //Normal
 		this.setAbility();
-		this.ball = ARRAY_IMG_BALL[1];
 		this.dexNo = 133;
 		this.level = 1;
 		this.hp_max = 55;
@@ -39,7 +39,7 @@ class Eevee extends Pokemon {
 		this.weight = 6.5;
 	}
 
-	public void setGender() {
+	private void setGender() {
 		//87.5%♂・12.5%♀
 		int num = this.rand.nextInt(8); //性別設定用
 		if (num != 0) {
@@ -49,7 +49,7 @@ class Eevee extends Pokemon {
 		}
 	}
 	
-	public void setAbility() {
+	private void setAbility() {
 		int num = this.rand.nextInt(ARRAY_ABILITY.length); //特性設定用
 		this.ability = ARRAY_ABILITY[num];
 	}
@@ -78,6 +78,9 @@ class Eevee extends Pokemon {
 		System.out.println("Congratulations! Your " + this.nickname + " evolved into " + ARRAY_EVOLVED_NAME[i] + "!");
 		this.dexNo = ARRAY_EVOLVED_DEXNO[i];
 		this.name = ARRAY_EVOLVED_NAME[i];
+		if(this.nickname.equals(NAME)) {
+			this.nickname = this.name;
+		}
 		this.type = ARRAY_EVOLVED_TYPE[i];
 		this.ability = ARRAY_EVOLVED_ABILITY[i];
 		this.height = ARRAY_EVOLVED_HW[i][0];
