@@ -22,7 +22,7 @@ public class Main {
 
 		//ポケモンセンターに行く
 		user.visitPokemonCenter();
-		
+
 		//2番目と3番目のポケモンに「かみなりのいし」を渡す
 		user.givePokemonItem(user.pocket[1], "ThunderStone");
 		user.givePokemonItem(user.pocket[2], "ThunderStone");
