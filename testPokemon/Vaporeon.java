@@ -5,7 +5,7 @@ final class Vaporeon extends Eevee{
 	static final String NAME = "Showers";
 
 	public Vaporeon(){
-		this(ARRAY_IMG_BALL[0]);
+		this(ARRAY_BALL[0][1]);
 	}
 
 	public Vaporeon(String ball){
@@ -19,9 +19,9 @@ final class Vaporeon extends Eevee{
 //		this.weight = super.ARRAY_EVOLVUTION[0][6];
 		this.dexNo = ARRAY_EVOLVED_DEXNO[0];
 		this.name = ARRAY_EVOLVED_NAME[0];
-		this.nickname = this.name;
+		this.setNickname(this.name);
 		this.setGender();
-		this.type = ARRAY_EVOLVED_TYPE[0];
+		this.type[0] = ARRAY_EVOLVED_TYPE[0];
 		this.ability = ARRAY_EVOLVED_ABILITY[0];
 		this.height = ARRAY_EVOLVED_HW[0][0];
 		this.weight = ARRAY_EVOLVED_HW[0][1];
@@ -61,3 +61,4 @@ final class Vaporeon extends Eevee{
 	}
 
 }
+

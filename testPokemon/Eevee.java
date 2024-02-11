@@ -15,21 +15,21 @@ class Eevee extends Pokemon {
 	//static final Object[][] ARRAY_EVOLUTION = {VAPOREON, JOLTEON, FLAREON};
 	static final int[] ARRAY_EVOLVED_DEXNO = { 0134, 0135, 0136 };
 	static final String[] ARRAY_EVOLVED_NAME = { "Showers", "Thunders", "Booster" };
-	static final String[] ARRAY_EVOLVED_TYPE = { ARRAY_TYPE[2], ARRAY_TYPE[3], ARRAY_TYPE[1] };
+	static final String[] ARRAY_EVOLVED_TYPE = { ARRAY_TYPE[3], ARRAY_TYPE[4], ARRAY_TYPE[2] };
 	static final String[] ARRAY_EVOLVED_ABILITY = { "Chosui", "Chikuden", "Moraibi" };
 	static final double[][] ARRAY_EVOLVED_HW = { { 1.0, 29.0 }, { 0.8, 24.5 }, { 0.9, 25.0 } };
 	static final int[] ARRAY_EVOLVED_MAXHP = { 130, 65, 65 };
 
 	public Eevee() {
-		this(ARRAY_IMG_BALL[0]);
+		this(ARRAY_BALL[0][0]);
 	}
 
 	public Eevee(String ball) {
 		super(ball);
 		this.name = NAME;
-		this.nickname = this.name;
+		this.setNickname(this.name);
 		this.setGender();
-		this.type = ARRAY_TYPE[0]; //Normal
+		this.type[0] = ARRAY_TYPE[1]; //Normal
 		this.setAbility();
 		this.dexNo = 133;
 		this.level = 1;
@@ -75,31 +75,17 @@ class Eevee extends Pokemon {
 	//進化
 	@Override
 	public void evolve(int i) {
-		System.out.println("Congratulations! Your " + this.nickname + " evolved into " + ARRAY_EVOLVED_NAME[i] + "!");
+		System.out.println("Congratulations! Your " + this.getNickname() + " evolved into " + ARRAY_EVOLVED_NAME[i] + "!");
 		this.dexNo = ARRAY_EVOLVED_DEXNO[i];
 		this.name = ARRAY_EVOLVED_NAME[i];
-		if(this.nickname.equals(NAME)) {
-			this.nickname = this.name;
+		if(this.getNickname().equals(NAME)) {
+			this.setNickname(this.name);
 		}
-		this.type = ARRAY_EVOLVED_TYPE[i];
+		this.type[0] = ARRAY_EVOLVED_TYPE[i];
 		this.ability = ARRAY_EVOLVED_ABILITY[i];
 		this.height = ARRAY_EVOLVED_HW[i][0];
 		this.weight = ARRAY_EVOLVED_HW[i][1];
 		this.hp_max = ARRAY_EVOLVED_MAXHP[i];
 		super.setItem("None");
-
-    
-		// int num = -1; //要素番号
-		// if (stone.equals(ARRAY_EVOLUTIONARY_STONE[0])) {
-		// 	num = 0;
-		// } else if (stone.equals(ARRAY_EVOLUTIONARY_STONE[1])) {
-		// 	num = 1;
-		// } else if (stone.equals(ARRAY_EVOLUTIONARY_STONE[2])) {
-		// 	num = 2;
-		// } else {
-		// 	System.out.println("There doesn't seem to be any change.");
-		// 	return;
-		// }
-		// System.out.println("Congratulations! Your " + this.nickname + " evolved into " + ARRAY_EVOLVED_NAME[num] + "!");
-	}
+   }
 }
