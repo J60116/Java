@@ -12,7 +12,7 @@ class User {
 		this("Satoshi", new Eevee("PokeBall"));
 	}
 
-	public User(String name,Pokemon pokemon) {
+	public User(String name, Pokemon pokemon) {
 		this.name = name;
 		this.pocket = new Pokemon[6];
 		this.setPocket(0, pokemon); 
@@ -66,9 +66,9 @@ class User {
 		}
 		pokemon.setNickname(str);
 		System.out.println("Pleasure to meet you, " + pokemon.getNickname() + "!");
-	}
-
-	//ポケモンを捕まえる
+  }
+  
+  //ポケモンを捕まえる
 	public void getPokemon(Pokemon pokemon, String ball) {
 		//ボールの名前に誤りがある場合
 		String str = "";
@@ -114,7 +114,6 @@ class User {
 				}
 			}
 		}
-		
 		//拡張for文は使用不可
 		//pはfor文の中で宣言した変数であり、pへの代入はthis.pocket自身の変更にはならない
 		//		for(Pokemon p : this.pocket) {
@@ -162,7 +161,6 @@ class User {
 
 	//ポケモンにアイテムを持たせる
 	public void giveItem(int num, String item) {
-		
 		if (this.getPocket()[num] != null) {
 			System.out.println(this.getPocket()[num].getNickname() + " received " + item + ".");
 			this.getPocket()[num].setItem(item);
@@ -170,5 +168,5 @@ class User {
 			System.out.println("There is no Pokemon in the pocket[" + num + "].");
 		}
 	}
-
+  
 }

@@ -8,8 +8,8 @@ public class Main {
 	
 		//いま所持しているポケモン
 		// user.pocket[0] = new Eevee(); //Userインスタント生成時に代入済み
-		user.setPocket(1,new Eevee("PokeBall"));
-		user.setPocket(2,new Vaporeon("SuperBall"));
+		user.setPocket(1, new Eevee("PokeBall"));
+		user.setPocket(2, new Vaporeon("SuperBall"));
 
 		//ポケモンが現れた
 		Pokemon eevee = new Eevee();
@@ -29,6 +29,6 @@ public class Main {
 
 		//所持しているポケモンのステータスを見る
 		user.viewCurrentParty();
-
+    
 	}
 }

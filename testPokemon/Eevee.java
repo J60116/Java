@@ -87,6 +87,5 @@ class Eevee extends Pokemon {
 		this.weight = ARRAY_EVOLVED_HW[i][1];
 		this.hp_max = ARRAY_EVOLVED_MAXHP[i];
 		super.setItem("None");
-    }
-	
+   }
 }
